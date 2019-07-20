@@ -243,7 +243,7 @@ client.on('message', message => {
 
 client.on("guildMemberAdd", (member) => {
     const cntwo = client.channels.find(cn => cn.id == 514534673712676865);
-    cntwo.send(member.user + " Seja bem vindo, para ter acesso ao discord, vá até #📋termos-discord e aceite os termos!");
+    cntwo.send(member.user + " Seja bem vindo, para ter acesso ao discord, vá até <#514455704686428161> e aceite os termos!");
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
