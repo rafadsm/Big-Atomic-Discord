@@ -159,7 +159,7 @@ import { mapGetters, mapActions } from 'vuex'
         },
         mounted()
         {
-          this.totalRows = this.items.length
+          this.totalRows = this.GetAllUsers.length
         }
     }
 </script>
