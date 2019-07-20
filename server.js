@@ -263,7 +263,9 @@ client.on('messageReactionAdd', (reaction, user) => {
         {
             let role = GetMyGuild().roles.find(r => r.name === "Membro");
 
-            if(member.roles.exists(role))
+            var fd = member.roles.find(x => x.name == "Membro")
+            
+            if(fd)
                 return
 
             member.addRole(role);
