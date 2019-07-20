@@ -20,7 +20,7 @@ const actions = {
     FetchData({commit}, token)
     {
         return new Promise((resolve, reject) => {
-            axios.get('https://finn-discord.herokuapp.com/check', {params:{token: token}}).then((response) => {
+            axios.get('http://localhost:8080/check', {params:{token: token}}).then((response) => {
                     if(response.data.error == 0)
                         commit(FETCH_DATA, {token: token, data: response.data})
                     resolve(response.data);

@@ -53,7 +53,7 @@ app.get('/check', function (req, res) {
         GetMyGuild().members.array()
         .filter(x => x.user.id != client.user.id)
         .forEach(function(item) {
-            users.push({id: item.user.id, name: item.user.username})
+            users.push({id: item.user.id, display: item.displayName, tag: item.user.discriminator, username: item.user.username})
         });
 
     var channels = []
@@ -128,7 +128,6 @@ client.on('ready', () => {
         setTimeout(() => msg.react('👎'), 500);
     });
 
-
     try{
         sq.open(RUST_IP, RUST_PORT);
     
@@ -142,11 +141,11 @@ client.on('ready', () => {
                 sq.close();
             });
             
-        }
-        catch(ex)
-        {
-            client.user.setActivity(OfflineStr, {type: 'PLAYING'});
-        }
+    }
+    catch(ex)
+    {
+        client.user.setActivity(OfflineStr, {type: 'PLAYING'});
+    }
 });
 
 

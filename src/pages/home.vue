@@ -1,19 +1,7 @@
 <template>
 <div>
-
 <b-container>
-  <!--b-alert show variant="success">
-    <h4 class="alert-heading">Well done!</h4>
-    <p>
-      Aww yeah, you successfully read this important alert message. This example text is going to
-      run a bit longer so that you can see how spacing within an alert works with this kind of
-      content.
-    </p>
-    <hr>
-    <p class="mb-0">
-      Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
-    </p>
-  </b-alert-->
+
   <b-row>
     <h4 class="alert-heading">Selecione o Canal</h4>
   </b-row>
@@ -26,7 +14,7 @@
   <br>
     <b-row>
 
-      <b-col sm="10">
+      <b-col sm="12">
 
         <b-form-textarea
       id="textarea"
@@ -39,6 +27,7 @@
   <br>
 
   <b-row>
+    <b-col sm="12">
     <b-form-radio-group
         id="btn-radios-2"
         v-model="selected"
@@ -47,20 +36,68 @@
         button-variant="outline-primary"
         name="radio-btn-outline"
       ></b-form-radio-group>
+        <b-button variant="primary" @click="SendMessage()" class="float-right">Enviar</b-button>
+    </b-col>
   </b-row>
 
   <br>
+
     <b-row>
-      
-      <b-col>
-        <b-button variant="primary" @click="SendMessage()">Enviar</b-button>
+    <h4 class="alert-heading">Lista de Usuários</h4>
+  </b-row>
+
+  <b-row>
+      <b-col md="8" class="my-1">
+        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+          <b-input-group>
+            <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+  </b-row>
+  <br>
+    <b-row>
+      <b-table
+      show-empty
+      stacked="md"
+      :items="GetAllUsers"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :filter="filter"
+      :sort-desc.sync="sortDesc"
+      :sort-direction="sortDirection"
+      @filtered="onFiltered">
+
+    <template slot="display" slot-scope="row">
+        {{ row.item.display }}
+    </template>
+    <template slot="username" slot-scope="row">
+        @{{ row.value }}#{{row.item.tag}}
+    </template>
+    <template slot="id" slot-scope="row">
+        <@{{ row.value }}>
+    </template>
+
+    </b-table>
+    </b-row>
+
+    <b-row>
+      <b-col md="6" class="my-1">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          class="my-0"
+        ></b-pagination>
       </b-col>
     </b-row>
     
 </b-container>
-    <!--div v-for="c in GetAllChannels" :key="c.id">
-        {{c.name}}
-    </div-->
+
 </div>
 </template>
 
@@ -77,7 +114,19 @@ import { mapGetters, mapActions } from 'vuex'
               { text: 'Comum', value: 0},
               { text: 'Like', value: 1 },
               { text: 'Vote', value: 2 }
-            ]
+            ],
+
+            fields: [
+              { key: 'display', label: 'Display Name'},
+              { key: 'username', label: 'TAG'},
+              { key: 'id', label: 'Mention'}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 20,
+            sortDesc: false,
+            sortDirection: 'asc',
+            filter: null,
           }
         },
         computed:
@@ -92,12 +141,17 @@ import { mapGetters, mapActions } from 'vuex'
 
         methods:
         {
+          onFiltered(filteredItems) {
+          this.totalRows = filteredItems.length
+          this.currentPage = 1
+        },
+
           SendMessage()
           {
             if(this.txtMessage.length == 0)
               return;
 
-                this.$http.post('https://finn-discord.herokuapp.com/send', {token: this.GetToken, type: this.selected, channel: this.id, message: this.txtMessage})
+                this.$http.post('http://localhost:8080/send', {token: this.GetToken, type: this.selected, channel: this.id, message: this.txtMessage})
                 this.txtMessage = ""
           }
         },
