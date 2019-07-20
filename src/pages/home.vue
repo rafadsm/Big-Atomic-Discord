@@ -151,7 +151,7 @@ import { mapGetters, mapActions } from 'vuex'
             if(this.txtMessage.length == 0)
               return;
 
-                this.$http.post('http://localhost:8080/send', {token: this.GetToken, type: this.selected, channel: this.id, message: this.txtMessage})
+                this.$http.post('https://finn-discord.herokuapp.com/send', {token: this.GetToken, type: this.selected, channel: this.id, message: this.txtMessage})
                 this.txtMessage = ""
           }
         },
