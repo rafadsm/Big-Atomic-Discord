@@ -76,7 +76,7 @@
         {{ row.item.display }}
     </template>
     <template slot="username" slot-scope="row">
-        @{{ row.value }}#{{row.item.tag}}
+        {{ row.value }}#{{row.item.tag}}
     </template>
     <template slot="id" slot-scope="row">
         <@{{ row.value }}>
@@ -159,7 +159,7 @@ import { mapGetters, mapActions } from 'vuex'
         },
         mounted()
         {
-
+          this.totalRows = this.items.length
         }
     }
 </script>
