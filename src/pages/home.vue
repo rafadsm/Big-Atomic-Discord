@@ -1,6 +1,6 @@
 <template>
-<div v-if="Logged">
-<b-container>
+<div >
+<b-container v-if="Logged">
 
   <b-row>
     <h4 class="alert-heading">Selecione o Canal</h4>
@@ -97,7 +97,9 @@
     </b-row>
     
 </b-container>
-
+<b-container v-else>
+  <h4 class="alert-heading">Faça login para ter acesso a página!</h4>
+</b-container>
 </div>
 </template>
 
