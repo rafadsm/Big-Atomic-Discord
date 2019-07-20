@@ -263,11 +263,6 @@ client.on('messageReactionAdd', (reaction, user) => {
         {
             let role = GetMyGuild().roles.find(r => r.name === "Membro");
 
-            var fd = member.roles.find(x => x.name == "Membro")
-            
-            if(fd)
-                return
-
             member.addRole(role);
 
             user.send("Agora você faz parte de nosso discord!\nTome cuidado para não ser expulso.");
