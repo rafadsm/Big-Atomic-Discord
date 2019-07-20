@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="Logged">
 <b-container>
 
   <b-row>
