@@ -160,6 +160,7 @@ import { mapGetters, mapActions } from 'vuex'
         mounted()
         {
           this.totalRows = this.GetAllUsers.length
+          this.id = this.GetAllChannels[0].id
         }
     }
 </script>
